@@ -61,7 +61,7 @@ const Navigation = ({ currentPage, setCurrentPage, isMenuOpen, setIsMenuOpen }) 
     { name: 'Dashboard', id: 'dashboard', icon: BarChart3 },
     // { name: 'About', id: 'about', icon: Info },
     { name: 'Features', id: 'features', icon: Star },
-    // { name: 'Pricing', id: 'pricing', icon: Award },
+    { name: 'Server', id: 'server', icon: Award },
     // { name: 'Contact', id: 'contact', icon: Mail },
   ];
 
@@ -469,77 +469,10 @@ const FeaturesPage = () => {
   );
 };
 
-// Pricing Page Component
-const PricingPage = () => {
+// Server Page Component
+const ServerPage = () => {
   return (
-    <div className="space-y-16">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-slate-900 mb-6">Simple, Transparent Pricing</h1>
-        <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-          Choose the plan that fits your needs. All plans include our core security features.
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {[
-          {
-            name: "Starter",
-            price: "$9",
-            period: "per user/month",
-            description: "Perfect for small teams",
-            features: ["100GB storage", "5 team members", "Basic analytics", "Email support"],
-            highlighted: false
-          },
-          {
-            name: "Professional",
-            price: "$19",
-            period: "per user/month",
-            description: "For growing businesses",
-            features: ["1TB storage", "Unlimited team members", "Advanced analytics", "Priority support", "Custom branding"],
-            highlighted: true
-          },
-          {
-            name: "Enterprise",
-            price: "Custom",
-            period: "contact us",
-            description: "For large organizations",
-            features: ["Unlimited storage", "Advanced security", "SSO integration", "Dedicated support", "Custom integrations"],
-            highlighted: false
-          }
-        ].map((plan, index) => (
-          <div key={index} className={`bg-white rounded-2xl p-8 shadow-lg border-2 transition-all duration-300 hover:shadow-xl hover:scale-105 ${
-            plan.highlighted ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-200'
-          }`}>
-            {plan.highlighted && (
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 px-4 rounded-lg text-sm font-semibold mb-4">
-                Most Popular
-              </div>
-            )}
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-              <p className="text-slate-600 mb-4">{plan.description}</p>
-              <div className="text-4xl font-bold text-slate-900 mb-1">{plan.price}</div>
-              <div className="text-slate-600">{plan.period}</div>
-            </div>
-            <ul className="space-y-3 mb-8">
-              {plan.features.map((feature, featureIndex) => (
-                <li key={featureIndex} className="flex items-center gap-3">
-                  <CheckCircle2 size={16} className="text-green-500" />
-                  <span className="text-slate-700">{feature}</span>
-                </li>
-              ))}
-            </ul>
-            <button className={`w-full py-3 rounded-xl font-semibold transition-all duration-200 ${
-              plan.highlighted
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl'
-                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-            }`}>
-              {plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <h1>server page </h1>
   );
 };
 
@@ -793,8 +726,7 @@ const FileUpload = ({ onUploadSuccess, isUploading, uploadProgress }) => {
 
 // Individual file item component
 const FileItem = ({ file, onDelete, isDeleting, viewMode = 'list' }) => {
-  const [showActions, setShowActions] = useState(false);
-
+  
   const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -1195,8 +1127,8 @@ function App() {
         return <AboutPage />;
       case 'features':
         return <FeaturesPage />;
-      case 'pricing':
-        return <PricingPage />;
+      case 'server':
+        return <ServerPage />;
       case 'contact':
         return <ContactPage />;
       default:
