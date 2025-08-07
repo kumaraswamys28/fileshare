@@ -1,10 +1,14 @@
 import { useState,useRef, useEffect } from 'react';
 import { Upload, Download, Trash2, File, Image, Video, FileText, Archive, Music, Code, AlertCircle, CheckCircle, X, RefreshCw, Cloud, Shield, Zap, Users, Search, Filter, Grid, List, Eye, Share2, Copy, MoreVertical, Menu, Home, Info, Mail, Phone, MapPin, Clock, Star, Award, Globe, Lock, ArrowRight, ChevronDown, Facebook, Twitter, Linkedin, Instagram, Play, CheckCircle2, TrendingUp, BarChart3, Settings, HelpCircle, LogOut, User, Bell, Heart } from 'lucide-react';
-
+import { Server, Cpu, Activity, TimerReset, RefreshCcw } from 'lucide-react';
+import { ShieldCheck, UploadCloud, Users2 } from 'lucide-react';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-function NotificationBell() {
+function NotificationBell({ resultsnoti }) {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([
+    { id: 1, message: "upload success" },
+  ]);
+
   const bellRef = useRef(null);
 
   // Close dropdown if clicked outside
@@ -18,9 +22,16 @@ function NotificationBell() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const notifications = [
-    { id: 1, message: "Your upload completed" },
-  ];
+  // React to resultsnoti change and add notification
+  useEffect(() => {
+
+    if (resultsnoti && "key" in resultsnoti) {
+      setNotifications((prev) => [
+        ...prev,
+        { id: prev.length + 1, message: resultsnoti.key },
+      ]);
+    }
+  }, [resultsnoti]);
 
   return (
     <div className="relative" ref={bellRef}>
@@ -36,10 +47,15 @@ function NotificationBell() {
 
       {showNotifications && (
         <div className="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-lg z-50 animate-fade-in">
-          <div className="p-4 text-sm font-medium text-slate-700 border-b">Notifications</div>
+          <div className="p-4 text-sm font-medium text-slate-700 border-b">
+            Notifications
+          </div>
           <ul className="max-h-60 overflow-y-auto">
             {notifications.map((note) => (
-              <li key={note.id} className="px-4 py-3 hover:bg-slate-50 text-slate-600 text-sm">
+              <li
+                key={note.id}
+                className="px-4 py-3 hover:bg-slate-50 text-slate-600 text-sm"
+              >
                 {note.message}
               </li>
             ))}
@@ -55,12 +71,13 @@ function NotificationBell() {
 
 
 // Navigation Component
-const Navigation = ({ currentPage, setCurrentPage, isMenuOpen, setIsMenuOpen }) => {
+const Navigation = ({ currentPage, setCurrentPage, isMenuOpen, setIsMenuOpen, resultsnoti }) => {
+  
   const navigation = [
     { name: 'Home', id: 'home', icon: Home },
     { name: 'Dashboard', id: 'dashboard', icon: BarChart3 },
     // { name: 'About', id: 'about', icon: Info },
-    { name: 'Features', id: 'features', icon: Star },
+    // { name: 'Features', id: 'features', icon: Star },
     { name: 'Server', id: 'server', icon: Award },
     // { name: 'Contact', id: 'contact', icon: Mail },
   ];
@@ -102,9 +119,8 @@ const Navigation = ({ currentPage, setCurrentPage, isMenuOpen, setIsMenuOpen }) 
 
           {/* User Actions */}
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-slate-500 hover:text-slate-700 transition-colors">
-  <NotificationBell />
-            </button>
+  <NotificationBell result={resultsnoti} />
+
             {/* <button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
               <User size={18} />
               Account
@@ -185,7 +201,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -197,7 +213,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
+          Support
           <div>
             <h4 className="text-lg font-semibold mb-4">Support</h4>
             <ul className="space-y-2">
@@ -207,9 +223,9 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          {/* Contact Info */}
+          {/* Contact Info
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-3">
@@ -230,7 +246,7 @@ const Footer = () => {
                 <span className="text-slate-400">24/7 Support</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar */}
@@ -272,26 +288,61 @@ const Toast = ({ message, type, onClose }) => {
 
 // Home Page Component
 const HomePage = () => {
+
   return (
     <div className="space-y-20">
       {/* Hero Section */}
-      <section className="text-center py-20">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 bg-clip-text text-transparent mb-6">
-            Express File Sharing
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed">
-            Secure, fast, and reliable file sharing platform designed for all.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
-              <Upload size={20} />
-              Get Started Free
-            </button>
-            
+      
+
+
+<section className="py-24 text-center bg-white">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Main Heading */}
+        <h1 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+          Express File Sharing
+        </h1>
+
+        {/* Subtext */}
+        <p className="text-xl md:text-2xl text-slate-600 leading-relaxed max-w-3xl mx-auto mb-4">
+          Secure, blazing-fast, and user-friendly file sharing platform built for individuals and teams.
+        </p>
+
+        {/* Supporting Line */}
+        <p className="text-md md:text-lg text-slate-500 max-w-2xl mx-auto mb-12">
+          No logins. No limits. Just fast uploads and seamless collaboration — all encrypted, all yours.
+        </p>
+
+        {/* Quick Value Props */}
+        <div className="grid sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="flex flex-col items-center">
+            <div className="bg-blue-100 p-4 rounded-full mb-4">
+              <UploadCloud size={32} className="text-blue-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-800">Instant Uploads</h3>
+            <p className="text-sm text-slate-600">Drag, drop, done — no waiting around.</p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="bg-green-100 p-4 rounded-full mb-4">
+              <ShieldCheck size={32} className="text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-800">End-to-End Encryption</h3>
+            <p className="text-sm text-slate-600">We don’t peek. Your data stays yours.</p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="bg-purple-100 p-4 rounded-full mb-4">
+              <Users2 size={32} className="text-purple-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-800">Built for Teams</h3>
+            <p className="text-sm text-slate-600">Collaborate effortlessly with shared workspaces.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+
+
+
 
       {/* Features Grid */}
       <section className="py-20">
@@ -414,67 +465,152 @@ const AboutPage = () => {
 };
 
 // Features Page Component
-const FeaturesPage = () => {
+// const FeaturesPage = () => {
+//   return (
+//     <div className="space-y-16">
+//       <div className="text-center">
+//         <h1 className="text-5xl font-bold text-slate-900 mb-6">Powerful Features</h1>
+//         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+//           Everything you need for secure, efficient file sharing and collaboration
+//         </p>
+//       </div>
+
+//       {/* Feature sections */}
+//       {[
+//         {
+//           icon: Shield,
+//           title: "Enterprise Security",
+//           description: "Bank-level encryption and compliance",
+//           features: ["End-to-end encryption", "SOC 2 compliance", "Advanced access controls", "Audit logging"]
+//         },
+//         {
+//           icon: Zap,
+//           title: "Performance & Speed",
+//           description: "Lightning-fast file delivery worldwide",
+//           features: ["Global CDN network", "99.9% uptime SLA", "Sub-second file access", "Smart caching"]
+//         },
+//         {
+//           icon: Users,
+//           title: "Team Collaboration",
+//           description: "Built for modern team workflows",
+//           features: ["Real-time sharing", "Comments & annotations", "Permission management", "Team spaces"]
+//         }
+//       ].map((section, index) => (
+//         <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
+//           <div className="flex items-center gap-4 mb-6">
+//             <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-3 rounded-xl">
+//               <section.icon size={32} className="text-blue-600" />
+//             </div>
+//             <div>
+//               <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
+//               <p className="text-slate-600">{section.description}</p>
+//             </div>
+//           </div>
+//           <div className="grid md:grid-cols-2 gap-4">
+//             {section.features.map((feature, featureIndex) => (
+//               <div key={featureIndex} className="flex items-center gap-3">
+//                 <CheckCircle2 size={16} className="text-green-500" />
+//                 <span className="text-slate-700">{feature}</span>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+// Server Page Component
+
+const ServerPage = () => {
+  const servernfo = {
+    instanceId: '--',
+    region: '--',
+    type: '--',
+    status: 'Can not connect',
+    uptime: '--',
+  };
+  const [serverData, setServerData] = useState(null);
+
+  useEffect(() => {
+    const fetchServerInfo = async () => {
+      try {
+const response = await await fetch(`${API_BASE_URL}/api/server`);
+        const data = await response.json();
+        setServerData(data);
+      } catch (err) {
+        setServerData(servernfo);
+        console.error('Failed to fetch server info:', err);
+      }
+    };
+
+    fetchServerInfo();
+  }, []);
+
+  const infoMap = serverData && [
+    {
+      icon: Server,
+      label: "Instance ID",
+      value: serverData.instanceId,
+    },
+    {
+      icon: MapPin,
+      label: "Region",
+      value: serverData.region,
+    },
+    {
+      icon: Cpu,
+      label: "Instance Type",
+      value: serverData.type,
+    },
+    {
+      icon: Activity,
+      label: "Status",
+      value: serverData.status,
+    },
+    {
+      icon: TimerReset,
+      label: "Uptime",
+      value: serverData.uptime,
+    },
+    {
+      icon: RefreshCcw,
+      label: "Last Refresh",
+      value: new Date().toLocaleString(),
+    }
+  ];
+
   return (
     <div className="space-y-16">
       <div className="text-center">
-        <h1 className="text-5xl font-bold text-slate-900 mb-6">Powerful Features</h1>
-        <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-          Everything you need for secure, efficient file sharing and collaboration
+        <h1 className="text-5xl font-bold text-slate-900 mb-6">Server Details</h1>
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          Live snapshot of server instance
         </p>
       </div>
 
-      {/* Feature sections */}
-      {[
-        {
-          icon: Shield,
-          title: "Enterprise Security",
-          description: "Bank-level encryption and compliance",
-          features: ["End-to-end encryption", "SOC 2 compliance", "Advanced access controls", "Audit logging"]
-        },
-        {
-          icon: Zap,
-          title: "Performance & Speed",
-          description: "Lightning-fast file delivery worldwide",
-          features: ["Global CDN network", "99.9% uptime SLA", "Sub-second file access", "Smart caching"]
-        },
-        {
-          icon: Users,
-          title: "Team Collaboration",
-          description: "Built for modern team workflows",
-          features: ["Real-time sharing", "Comments & annotations", "Permission management", "Team spaces"]
-        }
-      ].map((section, index) => (
-        <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-3 rounded-xl">
-              <section.icon size={32} className="text-blue-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
-              <p className="text-slate-600">{section.description}</p>
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {section.features.map((feature, featureIndex) => (
-              <div key={featureIndex} className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-green-500" />
-                <span className="text-slate-700">{feature}</span>
+      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200 max-w-4xl mx-auto">
+        {!serverData ? (
+          <p className="text-center text-slate-500">Loading server info...</p>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {infoMap.map((item, index) => (
+              <div key={index} className="flex items-start gap-4">
+                <div className="bg-gradient-to-r from-slate-100 to-slate-200 p-3 rounded-xl">
+                  <item.icon size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-500">{item.label}</p>
+                  <p className="text-lg font-medium text-slate-800">{item.value}</p>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      ))}
+        )}
+      </div>
     </div>
   );
 };
 
-// Server Page Component
-const ServerPage = () => {
-  return (
-    <h1>server page </h1>
-  );
-};
 
 // Contact Page Component
 const ContactPage = () => {
@@ -997,6 +1133,7 @@ function App() {
   const [deletingFileId, setDeletingFileId] = useState(null);
   const [toast, setToast] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [resultsnoti,setresultnoti]=useState();
 
   const showToast = (message, type) => {
     setToast({ message, type });
@@ -1065,6 +1202,16 @@ function App() {
 
       const data = await response.json();
 
+
+
+
+
+
+
+
+setresultnoti(data.result);
+
+
       // Add the new file to the list
       const newFile = {
         ...data,
@@ -1125,8 +1272,6 @@ function App() {
         );
       case 'about':
         return <AboutPage />;
-      case 'features':
-        return <FeaturesPage />;
       case 'server':
         return <ServerPage />;
       case 'contact':
@@ -1151,6 +1296,7 @@ function App() {
         setCurrentPage={setCurrentPage}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
+        resultsnoti={resultsnoti}
       />
 
       <main className="flex-1 container mx-auto px-4 py-8">

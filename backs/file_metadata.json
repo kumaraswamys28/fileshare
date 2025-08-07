@@ -1,11 +1,20 @@
 {
-  "mdcmg0p6y12ii2dz0h": {
-    "fileName": "ada.odt",
-    "s3Key": "mdcmg0p6y12ii2dz0h_ada.odt",
-    "uploadTime": "2025-07-21T04:44:33.807Z",
-    "expiryTime": "2025-07-21T07:44:33.546Z",
-    "fileSize": 32485,
-    "mimeType": "application/vnd.oasis.opendocument.text",
-    "publicUrl": "https://file-sharing-temp-bucket-resttestrerererf.s3.amazonaws.com/mdcmg0p6y12ii2dz0h_ada.odt"
+  "me1ctwkz3d85oobu17o": {
+    "fileName": "moldova.png",
+    "s3Key": "me1ctwkz3d85oobu17o_moldova.png",
+    "uploadTime": "2025-08-07T12:09:40.463Z",
+    "expiryTime": "2025-08-07T15:09:39.635Z",
+    "fileSize": 11476,
+    "mimeType": "image/png",
+    "publicUrl": "https://file-sharing-temp-bucket-resttestrerererf.s3.amazonaws.com/me1ctwkz3d85oobu17o_moldova.png"
+  },
+  "me1cxibpat0xkixoqxw": {
+    "fileName": "jrnl",
+    "s3Key": "me1cxibpat0xkixoqxw_jrnl",
+    "uploadTime": "2025-08-07T12:12:28.917Z",
+    "expiryTime": "2025-08-07T15:12:27.781Z",
+    "fileSize": 6475,
+    "mimeType": "application/octet-stream",
+    "publicUrl": "https://file-sharing-temp-bucket-resttestrerererf.s3.amazonaws.com/me1cxibpat0xkixoqxw_jrnl"
   }
 }

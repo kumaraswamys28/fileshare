@@ -1,3 +1,4 @@
+
 const express = require('express');
 const multer = require('multer');
 const AWS = require('aws-sdk');
@@ -18,7 +19,7 @@ app.use(express.json());
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION || 'us-east-1'
+  region: process.env.AWS_REGION || 'ap-south-1'
 });
 
 const s3 = new AWS.S3();
@@ -300,6 +301,29 @@ app.delete('/api/files/:fileId', async (req, res) => {
     return res.status(500).json({ error: 'Failed to delete file' });
   }
 });
+
+
+
+
+app.get('/api/server', async (req, res) => {
+  // Dummy server info, replace with AWS EC2 describeInstances if needed
+  const serverInfo = {
+    instanceId: 'LOCAL 1',
+    region: 'us-east-1',
+    type: 't2.micro',
+    status: 'running',
+    uptime: '3 minutes',
+  };
+
+  res.json(serverInfo);
+});
+
+
+
+
+
+
+
 
 
 app.listen(PORT, '0.0.0.0', () => {
