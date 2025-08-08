@@ -1,4 +1,38 @@
 create iam user
 with cli and s3 policy full access
-and install node in ec2 with cosotme tcp access form any where 
+
+s3 bucket with {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadForObjects",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::file-sharing-temp-bucket-resttestrerererf/*"
+        },
+        {
+            "Sid": "AllowCloudFrontServicePrincipal",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudfront.amazonaws.com"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::file-sharing-temp-bucket-resttestrerererf/*",
+            "Condition": {
+                "ArnLike": {
+                    "AWS:SourceArn": [
+                        "arn:aws:cloudfront::806110537371:distribution/ECN3RS3DZB6WM",
+                        "arn:aws:cloudfront::806110537371:distribution/E2ID86SK8OO3QC"
+                    ]
+                }
+            }
+        }
+    ]
+}
+ec2
+with security group ec2file
+target group
+with vpc and port 
+loadbalancer wiht fileserverapi 
 save those in the .env
